@@ -61,12 +61,4 @@ class Board
     end
   end
 
-  def non_blank_cell_coords
-    3.times do |i|
-      3.times do |j|
-        return [i,j] if @board_arr[i][j].nil
-      end
-    end
-  end
-  
 end
