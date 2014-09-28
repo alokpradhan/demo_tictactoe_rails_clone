@@ -7,17 +7,17 @@
 </p>
 
 <!-- Render Board -->
-<pre>
-  <table>
-    <% 3.times do |row| %>
-      <tr> 
-        <% 3.times do |cell| %>
-          <td>-</td>
-        <% end %>
-      </tr>
-    <% end %>
-  </table>
-</pre>
+<table>
+  <% @board_arr.each do |row| %>
+    <tr>
+      <% row.each do |cell| %>
+        <td>
+          <%= cell.nil? ? '-' : cell %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
 
 <!-- Render Form -->
 <%= form_tag(make_move_path, :method => "POST") do %>
