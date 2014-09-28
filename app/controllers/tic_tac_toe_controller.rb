@@ -19,7 +19,15 @@ class TicTacToeController < ApplicationController
     # Make @board the only place where our board_arr
     # lives for now so we don't get confused by @board_arr
     @board = Board.new(retrieve_board_arr)
+
     @board.add_piece(retrieve_coords, @current_player)
+
+    # Check for game-ending conditions
+    if @board.winning_combination?(@current_player)
+      @game_over = "Game over, player #{@current_player} WINS!"
+    elsif @board.full?
+      @game_over = "Game Over! You've drawn."
+    end
 
     # Now pass our board array back to the view
     # and save everything we want to save

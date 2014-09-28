@@ -1,10 +1,18 @@
 <h1>Welcome to TicTacToe!</h1>
 
-<h2>It is player <%= @current_player %>'s turn!</h2>
+<% if @game_over %>
+  <h2>
+    <%= @game_over %>
+  </h2>
+<% else %>
+  <h2>
+    It is player <%= @current_player %>'s turn!
+  </h2>
 
-<p>
-  Enter your selection using the form below
-</p>
+  <p>
+    Enter your selection using the form below
+  </p>
+<% end %>
 
 <!-- Render Board -->
 <table>
@@ -19,18 +27,31 @@
   <% end %>
 </table>
 
-<!-- Render Form -->
-<%= form_tag(make_move_path, :method => "POST") do %>
-  <table>
-    <% 3.times do |row| %>
-      <tr> 
-        <% 3.times do |cell| %>
-          <td>
-            <%= radio_button_tag("move","#{row},#{cell}") %>
-          </td>
-        <% end %>
-      </tr>
-    <% end %>
-  </table>
-  <%= submit_tag "Make Move" %>
+<% if @game_over %>
+
+  <!-- Render Game Over Link -->
+  <%= link_to "Play Again!", new_path %>
+
+<% else %>
+
+  <!-- Render Form -->
+  <%= form_tag(make_move_path, :method => "POST") do %>
+    <table>
+      <% 3.times do |row| %>
+        <tr> 
+          <% 3.times do |cell| %>
+            <td>
+              <% disabled = @board_arr[row][cell] %>
+              <%= radio_button_tag( "move",
+                                    "#{row},#{cell}",
+                                    !disabled,
+                                    :disabled => disabled) %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+    <%= submit_tag "Make Move" %>
+  <% end %>
+
 <% end %>
